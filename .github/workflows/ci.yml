@@ -25,4 +25,4 @@ jobs:
         with:
           context: ./backend
           push: true
-          tags: ${{ secrets.DOCKERHUB_USERNAME}}
+          tags: ${{ secrets.DOCKEHUB_USERNAME}}/backend-abhishek
