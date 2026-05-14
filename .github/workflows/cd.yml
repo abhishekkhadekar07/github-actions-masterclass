@@ -2,8 +2,9 @@ name: abhishek cd workflow
 
 on:
   workflow_run:
-              workflow:["CI"]
-              types:[completed]
+    workflows: ["CI"]
+    types: [completed]
+    branches: [main]
 
 jobs:
     deploy:
@@ -20,3 +21,4 @@ jobs:
                       git pull origin main
                       docker compose pull
                       docker compose up -d
+
