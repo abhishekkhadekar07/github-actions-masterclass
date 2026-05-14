@@ -18,3 +18,4 @@ COPY --from=builder /app/skillpulse .
 EXPOSE 8080
 
 CMD ["./skillpulse"]
+

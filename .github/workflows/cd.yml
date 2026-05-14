@@ -1,0 +1,22 @@
+name: abhishek cd workflow
+
+on:
+  workflow_run:
+              workflow:["CI"]
+              types:[completed]
+
+jobs:
+    deploy:
+          runs_on: ubuntu-latest
+          steps:
+              - uses: appleboy/ssh-action@v1
+                with:
+                  host: ${{ secrets.HOST }}
+                  username: ${{ secrets.USERNAME }}
+                  key: ${{ secrets.EC2_SSH_KEY }}
+                  script: |
+                      git clone https://github.com/abhishekkhadekar07/github-actions-masterclass.git
+                      cd ~/github-actions-masterclass
+                      git pull origin main
+                      docker compose pull
+                      docker compose up -d
