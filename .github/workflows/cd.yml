@@ -1,8 +1,8 @@
-name: CD
+name: abhishek CD
 
 on:
   workflow_run:
-    workflows: ["CI"]
+    workflows: ["abhishek CD"]
     types: [completed]
     branches: [master]
 
@@ -17,15 +17,20 @@ jobs:
     steps:
       - uses: appleboy/ssh-action@v1
         with:
-          host: ${{ secrets.HOST }}
-          username: ${{ secrets.USERNAME }}
+          host: ${{ secrets.EC2_HOST }}
+          username: ${{ secrets.EC2_USER }}
           key: ${{ secrets.EC2_SSH_KEY }}
           script: |
-              git clone https://github.com/abhishekkhadekar07/github-actions-masterclass.git 
-              cd ~/github-actions-masterclass
-              git pull origin main
-              docker compose pull
-              docker compose up -d
-              docker image prune -f
-
+            if [ ! -d ~/github-actions-kubernetes-masterclass ]; then
+              git clone ${{ github.server_url }}/${{ github.repository }}.git ~/github-actions-kubernetes-masterclass
+            fi
+            cd ~/github-actions-kubernetes-masterclass
+            git pull origin main
+            if [ ! -f .env ]; then
+              echo "ERROR: ~/github-actions-kubernetes-masterclass/.env is missing. Create it once with DOCKERHUB_USERNAME and DB credentials."
+              exit 1
+            fi
+            docker compose pull
+            docker compose up -d
+            docker image prune -f
 
