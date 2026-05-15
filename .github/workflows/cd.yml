@@ -24,4 +24,4 @@ jobs:
             cd ~/github-actions-masterclass
             git pull origin main
             docker compose pull
-            docker compose up -d
+            docker compose down && docker compose up -d
