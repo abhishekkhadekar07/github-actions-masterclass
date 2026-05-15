@@ -20,7 +20,7 @@ jobs:
           username: ${{ secrets.EC2_USER }}
           key: ${{ secrets.EC2_SSH_KEY }}
           script: |
-              git clone https://github.com/abhishekkhadekar07/github-actions-masterclass.git
+            git clone https://github.com/abhishekkhadekar07/github-actions-masterclass.git
             cd ~/github-actions-masterclass
             git pull origin main
             docker compose pull
