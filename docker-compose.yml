@@ -3,10 +3,10 @@ services:
     image: mysql:8.4
     restart: unless-stopped
     environment:
-      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD:-rootpassword123}
-      MYSQL_DATABASE: ${DB_NAME:-skillpulse}
-      MYSQL_USER: ${DB_USER:-skillpulse}
-      MYSQL_PASSWORD: ${DB_PASSWORD:-skillpulse123}
+      MYSQL_ROOT_PASSWORD: ${{MYSQL_ROOT_PASSWORD}}
+      MYSQL_DATABASE: ${{DB_NAME}}
+      MYSQL_USER: ${{DB_USER}}
+      MYSQL_PASSWORD: ${{DB_PASSWORD}}
     ports:
       - "3306:3306"
     volumes:
@@ -22,7 +22,7 @@ services:
       start_period: 30s
     
   backend:
-    image: ${DOCKERHUB_USERNAME:-akhadekar}/skillpulse-backend:latest
+    image: ${{DOCKERHUB_USERNAME}}/skillpulse-backend:latest
     build: ./backend
     restart: unless-stopped
     networks:
@@ -30,9 +30,9 @@ services:
     environment:
       DB_HOST: db
       DB_PORT: "3306"
-      DB_USER: ${DB_USER:-skillpulse}
-      DB_PASSWORD: ${DB_PASSWORD:-skillpulse123}
-      DB_NAME: ${DB_NAME:-skillpulse}
+      DB_USER: ${{DB_USER}}
+      DB_PASSWORD: ${{DB_PASSWORD}}
+      DB_NAME: ${{DB_NAME}}
       PORT: "8080"
   
     depends_on:
@@ -40,7 +40,7 @@ services:
         condition: service_healthy
 
   frontend:
-    image: ${DOCKERHUB_USERNAME:-akhadekar}/skillpulse-frontend:latest
+    image: ${{DOCKERHUB_USERNAME}}/skillpulse-frontend:latest
     build: ./frontend
     restart: unless-stopped
     networks:
